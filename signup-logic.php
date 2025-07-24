@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require 'config/database.php';
     if(isset($_POST['submit'])){
         $fname=filter_var($_POST['first_name'], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -63,13 +64,15 @@
             }
         }
         // Nếu gặp vấn đề gì quay về Signup.php
-        if($_SESSION['signup']){
+        if(isset($_SESSION['signup'])){
+            $_SESSION['signup-data']=$_POST;
             header('location:' . ROOT_URL.'signup.php');
             die();
         }else{
             $insert_user_query="INSERT INTO users(first_name, last_name, user_name, email, password, avatar, is_admin)
                                         VALUES ('$fname', '$lname', '$uname', '$email', '$hash_pass', '$avatar_name', 
                                                 '0')";
+            mysqli_query($conn, $insert_user_query);
             if(!mysqli_errno($conn)){
                 $_SESSION['signup-success']="Đăng ký thành công vui lòng đăng nhập!!!";
                 header('location:' .ROOT_URL . 'signin.php');
