@@ -15,7 +15,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="dashboard.php"  class="active">
+                        <a href="index.php"  class="active">
                             <i class="fas fa-file-alt"></i>
                             <h5>Manage Posts</h5>
                         </a>

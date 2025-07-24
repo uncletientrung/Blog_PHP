@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reponsive Multipage Blog Website</title>
-    <link rel="stylesheet" href="./style.css">      <!-- TRANG TRÍ HTML -->
+    <link rel="stylesheet" href="css/style.css">      <!-- TRANG TRÍ HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- ICONSCOUT -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
  
@@ -20,7 +20,7 @@
                 <input type="text" placeholder="Username or Email">
                 <input type="password" placeholder="Password">
                 <button type="submit" class="btn">Sign In</button>
-                <small>Don't have account? <a href="signup.html">Sign Up</a></small>
+                <small>Don't have account? <a href="signup.php">Sign Up</a></small>
             </form>
         </div>
     </section>
