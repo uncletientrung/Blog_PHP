@@ -15,7 +15,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="dashboard.php">
+                        <a href="dashboard.php"  class="active">
                             <i class="fas fa-file-alt"></i>
                             <h5>Manage Posts</h5>
                         </a>
@@ -27,7 +27,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="manage-users.php" class="active">
+                        <a href="manage-users.php">
                             <i class="fas fa-users"></i>
                             <h5>Manage Users</h5>
                         </a>
@@ -51,48 +51,42 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Username</th>
+                            <th>Title</th>
+                            <th>Category</th>
                             <th>Edit</th>
                             <th>Delete</th>
-                            <th>Admin</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Trung</td>
-                            <td>trunghachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>Yes</td>
+                            <td>Gumdam là gì</td>
+                            <td>Red</td>
+                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
+                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
                         </tr>
                         <tr>
-                            <td>Lang</td>
-                            <td>langhachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
+                            <td>Gumdam là gì</td>
+                            <td>Red</td>
+                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
+                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
                         </tr>
                         <tr>
-                            <td>Bam</td>
-                            <td>bamhachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
+                            <td>Gumdam là gì</td>
+                            <td>Red</td>
+                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
+                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
                         </tr>
                         <tr>
-                            <td>giang</td>
-                            <td>gianghachcf</td>    
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
+                            <td>Gumdam là gì</td>
+                            <td>Red</td>
+                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
+                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
                         </tr>
                     </tbody>
                 </table>
             </main>
         </div>
     </section>
-
 
 <?php
     include '../partials/footer.php';
