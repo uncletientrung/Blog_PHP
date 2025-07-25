@@ -1,4 +1,5 @@
 <?php
+    session_start();
     // Khai báo các tên riêng
     define('ROOT_URL','http://localhost/Blog_php/');
     define('DB_HOST', 'localhost');

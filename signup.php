@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require 'config/database.php';
 
     // Ghi nhớ lại thông tin nếu người dùng lỡ nhập sai

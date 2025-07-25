@@ -1,5 +1,6 @@
 <?php
     include 'partials/header.php';
+
 ?>
 
     <section class="dashboard">
@@ -20,6 +21,7 @@
                             <h5>Manage Posts</h5>
                         </a>
                     </li>
+                    <?php if(isset($_SESSION['user_is_admin'])) : ?>
                     <li>
                         <a href="add-user.php">
                             <i class="fas fa-user-plus"></i>
@@ -44,6 +46,7 @@
                             <h5>Manage Categories</h5>
                         </a>
                     </li>
+                    <?php endif ?>
                 </ul>
             </aside>
             <main>

@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require 'config/database.php';
     if(isset($_POST['submit'])){
         $fname=filter_var($_POST['first_name'], FILTER_SANITIZE_SPECIAL_CHARS);
