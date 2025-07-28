@@ -1,8 +1,59 @@
 <?php
     include 'partials/header.php';
+
+    // Quản lý dữ liệu nhân viên
+    $current_admin_id= $_SESSION['user-id'];
+    $query="SELECT * FROM users WHERE NOT id=$current_admin_id";
+    $users=mysqli_query($conn, $query);
 ?>
 
     <section class="dashboard">
+        <!-- Hiển thị thêm thành công -->
+        <?php if(isset($_SESSION['add-user-success'])) : ?> 
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['add-user-success'];
+                        unset($_SESSION['add-user-success']);
+                    ?>
+                </p>
+            </div> 
+        <!-- Hiển thị sửa thành công -->
+        <?php elseif(isset($_SESSION['edit-user-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['edit-user-success'];
+                        unset($_SESSION['edit-user-success']);
+                    ?>
+                </p>
+            </div> 
+        <!-- Hiển thị sửa thất bại -->
+        <?php elseif(isset($_SESSION['edit-user'])) : ?>
+            <div class="alert__message error container">
+                <p>
+                    <?= $_SESSION['edit-user'];
+                        unset($_SESSION['edit-user']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị XÓA THẤT BẠI -->
+        <?php elseif(isset($_SESSION['delete-user'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['delete-user'];
+                        unset($_SESSION['delete-user']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị XÓA THÀNH CÔNG -->
+        <?php elseif(isset($_SESSION['delete-user-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['delete-user-success'];
+                        unset($_SESSION['delete-user-success']);
+                    ?>
+                </p>
+            </div>
+        <?php  endif  ?>
         <div class="container dashboard__container">
             <button id="show__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-right"></i></button>
             <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-left"></i></button>
@@ -61,34 +112,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Trung</td>
-                            <td>trunghachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Lang</td>
-                            <td>langhachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>Bam</td>
-                            <td>bamhachcf</td>
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>giang</td>
-                            <td>gianghachcf</td>    
-                            <td><a href="edit-user.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-user.php" class="btn sm danger">Delete</a></td>
-                            <td>No</td>
-                        </tr>
+                        <?php while($user_row = mysqli_fetch_assoc($users)) : ?>
+                            <tr>
+                                <td><?= $user_row['first_name'] . ' ' . $user_row['last_name'] ?></td>
+                                <td><?= $user_row['user_name'] ?></td>
+                                <td><a href="<?= ROOT_URL?>admin/edit-user.php?id=<?= $user_row['id']?>" class="btn sm">
+                                    Edit</a> <!-- Page_Layout -->
+                                </td>
+                                <td><a href="<?= ROOT_URL?>admin/delete-user.php?id=<?= $user_row['id']?>" class="btn sm danger">
+                                    Delete</a> 
+                                    <!-- Page_Layout -->
+                                </td>
+                                <td> <?= $user_row['is_admin'] ? 'Yes' : 'No' ?> </td> <!-- If else nhanh -->
+                            </tr>
+                        <?php endwhile ?>
                     </tbody>
                 </table>
             </main>

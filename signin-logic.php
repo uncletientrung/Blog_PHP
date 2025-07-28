@@ -17,6 +17,8 @@
                 $db_user_pass=$user_row['password']; // Nếu tài khoản code thì trả về hàng đó và lấy mật khẩu hàng đó
                 if(password_verify($password, $db_user_pass)){
                     $_SESSION['user-id']=$user_row['id']; // Tạo session lấy id người dùng
+                                                            // Đẩy session user-id này mục đích để không cần hiện 
+                                                            // User để edit
                     if($user_row['is_admin']==1){
                         $_SESSION['user_is_admin'] =true;
                     }

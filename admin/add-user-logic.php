@@ -80,7 +80,7 @@
             mysqli_query($conn, $insert_user_query);
             if(!mysqli_errno($conn)){
                 $_SESSION['add-user-success']="Thêm User thành công!!!";
-                header('location:' .ROOT_URL . 'admin/add-user.php');
+                header('location:' .ROOT_URL . 'admin/manage-users.php');
                 die();
             }
         }
