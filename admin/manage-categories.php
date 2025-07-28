@@ -1,8 +1,48 @@
 <?php
     include 'partials/header.php';
+    $query="SELECT * FROM categories ORDER BY  title ASC" ; // Lấy theo alpha
+    $categories= mysqli_query($conn, $query);
+
 ?>
 
     <section class="dashboard">
+        <!-- Hiển thị thêm CATEGORY THÀNH CÔNG -->
+        <?php if(isset($_SESSION['add-category-success'])) : ?> 
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['add-category-success'];
+                        unset($_SESSION['add-category-success']);
+                    ?>
+                </p>
+            </div> 
+        <!-- Hiển thị SỬA CATEGORY THÀNH CÔNG -->
+        <?php elseif(isset($_SESSION['edit-category-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['edit-category-success'];
+                        unset($_SESSION['edit-category-success']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị SỬA CATEGORY THẤT BẠI -->
+        <?php elseif(isset($_SESSION['edit-category'])) : ?>
+            <div class="alert__message error container">
+                <p>
+                    <?= $_SESSION['edit-category'];
+                        unset($_SESSION['edit-category']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị XÓA CATEGORY THÀNH CÔNG -->
+        <?php elseif(isset($_SESSION['delete-category-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['delete-category-success'];
+                        unset($_SESSION['delete-category-success']);
+                    ?>
+                </p>
+            </div>
+        <?php endif ?>
         <div class="container dashboard__container">
             <button id="show__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-right"></i></button>
             <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-left"></i></button>
@@ -50,47 +90,28 @@
             </aside>
             <main>
                 <h2>Manage Categories</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Red</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Green</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Blue</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Yelow</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Purple</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Orange</td>
-                            <td><a href="edit-category.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-category.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <?php if(mysqli_num_rows($categories)>0) : ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <?php while($category_row =mysqli_fetch_assoc($categories)) : ?>
+                            <tbody>
+                                <tr>
+                                    <td><?= $category_row['title']?></td>
+                                    <td><a href="<?= ROOT_URL ?>admin/edit-category.php?id=<?= $category_row['id'] ?>" class="btn sm">Edit</a></td>
+                                    <td><a href="<?= ROOT_URL ?>admin/delete-category.php?id=<?= $category_row['id'] ?>" class="btn sm danger">Delete</a></td>
+                                </tr>
+                            </tbody>
+                        <?php endwhile ?>
+                    </table>
+                <?php else :?>
+                    <div class="alert__message error"><?= "No categories found"?></div>
+                <?php endif?>
             </main>
         </div>
     </section>
