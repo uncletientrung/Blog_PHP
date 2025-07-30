@@ -484,6 +484,9 @@ input, textarea, select{
     cursor: default;
     transition: var(--transition);
 }
+.section__extra-margin{
+    margin-top: 100px;
+}
 
 /* ================================================(Thiết kế Ipad)============================================================ */
 @media screen and (max-width: 1024px) {

@@ -57,3 +57,83 @@
     </section>
 </body>
 </html>
+
+
+
+<?php
+    include 'partials/header.php';
+
+    // Post nổi bật
+    $featured_query="SELECT * FROM posts WHERE is_featured=1";
+    $featured_result= mysqli_query($conn, $featured_query);
+    $featured=mysqli_fetch_assoc($featured_result);
+
+    // In tối đa 9 bài post
+    $query="SELECT * FROM posts ORDER BY data_time DESC LIMIT 9";
+    $posts=mysqli_query($conn, $query);
+
+?>
+ 
+
+
+     <section class="posts">
+        <div class="container posts__container">
+            <?php while($post_row=mysqli_fetch_assoc($posts)) : ?>
+                <article class="post">
+                    <?php
+                        $category_id=$post_row['category_id'];
+                        $category_query="SELECT * FROM categories WHERE id =$category_id";
+                        $category_result=mysqli_query($conn, $category_query);
+                        $category=mysqli_fetch_assoc($category_result);
+                    ?>
+                    <div class="post__thumbnail">
+                        <img src="./images/<?= $posts_row['thumbnail'] ?>">
+                    </div>
+                    <div class="post__info">
+                        <a href="<?= ROOT_URL?>category-posts.php?id=<?=$post_row['category_id']?>" class="category__button">
+                            <?= $category['title'] ?>
+                        </a>
+
+                        <h3 class="post__title">
+                            <a href="<?= ROOT_URL. 'post.php?id='. $featured['id'] ?>"> 
+                            <?= $featured['title']?>
+                        </a> 
+                        </h3>
+
+                        <p class="post__body">
+                            Là 1 cái gì đó thú vị và hay ho
+                        </p>
+                        <div class="post__author">
+                            <div class="post__author-avatar">
+                                <img src="./images/blog4.jpg">
+                            </div>
+                            <div class="post__author-info">
+                                <h5>By: TrungGD1</h5>
+                                <small>
+                                    <?= date("M d, Y - H:i ", strtotime($featured['date_time'])) ?>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            <?php endwhile ?>
+        </div>
+     </section>
+     <!-- XONG PHẦN POST -->
+
+     <section class="category__buttons">
+        <div class="container category__buttons-container">
+            <a href="" class="category__button">RED</a>
+            <a href="" class="category__button">GREEN</a>
+            <a href="" class="category__button">YELLOW</a>
+            <a href="" class="category__button">BLUE</a>
+            <a href="" class="category__button">PURPLE</a>
+            <a href="" class="category__button">ORANGE</a>
+        </div>
+     </section>
+     <!-- XONG PHẦN CATEPGORY BUTTONS (Chọn loại) -->
+
+<?php
+    include 'partials/footer.php';
+
+?>

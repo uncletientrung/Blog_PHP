@@ -1,9 +1,60 @@
 <?php
     include 'partials/header.php';
 
+    $current_user_id=$_SESSION['user-id'];
+    $query="SELECT posts.id, posts.title, posts.category_id
+            FROM posts, users
+            WHERE posts.author_id = users.id AND posts.author_id= $current_user_id" ;
+    $posts= mysqli_query($conn, $query);
 ?>
 
     <section class="dashboard">
+         <!-- Hiển thị thêm POST THÀNH CÔNG -->
+        <?php if(isset($_SESSION['add-post-success'])) : ?> 
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['add-post-success'];
+                        unset($_SESSION['add-post-success']);
+                    ?>
+                </p>
+            </div> 
+        <!-- Hiển thị SỬA POST THÀNH CÔNG -->
+        <?php elseif(isset($_SESSION['edit-post-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['edit-post-success'];
+                        unset($_SESSION['edit-post-success']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị SỬA POST Thất bại -->
+        <?php elseif(isset($_SESSION['edit-post'])) : ?>
+            <div class="alert__message error container">
+                <p>
+                    <?= $_SESSION['edit-post'];
+                        unset($_SESSION['edit-post']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị Xóa POST Thất bại -->
+        <?php elseif(isset($_SESSION['delete-post'])) : ?>
+            <div class="alert__message error container">
+                <p>
+                    <?= $_SESSION['delete-post'];
+                        unset($_SESSION['delete-post']);
+                    ?>
+                </p>
+            </div>
+        <!-- Hiển thị Xóa POST Thành Công -->
+        <?php elseif(isset($_SESSION['delete-post-success'])) : ?>
+            <div class="alert__message success container">
+                <p>
+                    <?= $_SESSION['delete-post-success'];
+                        unset($_SESSION['delete-post-success']);
+                    ?>
+                </p>
+            </div>
+        <?php endif ?>
         <div class="container dashboard__container">
             <button id="show__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-right"></i></button>
             <button id="hide__sidebar-btn" class="sidebar__toggle"><i class="fas fa-chevron-left"></i></button>
@@ -51,42 +102,36 @@
             </aside>
             <main>
                 <h2>Manage Users</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gumdam là gì</td>
-                            <td>Red</td>
-                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Gumdam là gì</td>
-                            <td>Red</td>
-                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Gumdam là gì</td>
-                            <td>Red</td>
-                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                        <tr>
-                            <td>Gumdam là gì</td>
-                            <td>Red</td>
-                            <td><a href="edit-post.php" class="btn sm">Edit</a></td>
-                            <td><a href="delete-post.php" class="btn sm danger">Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <?php if(mysqli_num_rows($posts)>0) : ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($post_row=mysqli_fetch_assoc($posts)) : ?>
+                                <?php
+                                    $category_id=$post_row['category_id'];
+                                    $category_query="SELECT title FROM categories WHERE id=$category_id";
+                                    $category_result=mysqli_query($conn, $category_query);
+                                    $category=mysqli_fetch_assoc($category_result);
+                                ?>
+                                <tr>
+                                    <td><?= $post_row['title']?></td>
+                                    <td><?= $category['title']?></td>
+                                    <td><a href="<?= ROOT_URL ?>admin/edit-post.php?id=<?= $post_row['id'] ?>" class="btn sm">Edit</a></td>
+                                    <td><a href="<?= ROOT_URL ?>admin/delete-post.php?id=<?= $post_row['id'] ?>" class="btn sm danger">Delete</a></td>
+                                </tr>
+                            <?php endwhile ?>
+                        </tbody>
+                    </table>
+                <?php else :?>
+                    <div class="alert__message error"><?= "No post found"?></div>
+                <?php endif?>
             </main>
         </div>
     </section>

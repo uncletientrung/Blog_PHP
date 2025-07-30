@@ -17,6 +17,19 @@
             }
         }
         // Xóa hết các post USER POST
+        $thumbnails_query="SELECT thumbnail FROM posts WHERE author_id=$id";
+        $thumbnails_result=mysqli_query($conn, $thumbnails_query);
+        if(mysqli_num_rows($thumbnails_result)>0){  // Sau khi xóa user thì database set Null khi xóa id thì nó sẽ xóa hết
+                                                    // Sau đó nó sẽ xóa thumbnail như dưới 
+            while($thumbnail_row= mysqli_fetch_assoc($thumbnails_result)){
+                // Xóa hết thumbnail ra trước
+                $thumbnail_path='../image/'. $thumbnail_row['thumbnail'];
+                if($thumbnail_path){
+                    unlink( $thumbnail_path);
+                }
+            }
+        }
+
 
         // Xóa user khỏi database
         $delete_user_query = "DELETE FROM users WHERE id =$id";

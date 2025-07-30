@@ -1,38 +1,42 @@
 <?php
     include 'partials/header.php';
+
+    //
+    if(isset($_GET['id'])){
+        $id=filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+        $query="SELECT * FROM posts WHERE id=$id";
+        $result=mysqli_query($conn, $query);
+        $post=mysqli_fetch_assoc($result);
+    }else{
+        header('location:'. ROOT_URL. 'blog.php');
+    }
 ?>
 
     <section class="singlepost">
         <div class="container singlepost__container">
-            <h2>Giới thiệt về Gumdam</h2>
+            <?php 
+                $user_id=$post['author_id'];
+                $user_query="SELECT * FROM users WHERE id =$user_id";
+                $user_result=mysqli_query($conn, $user_query);
+                $user=mysqli_fetch_assoc($user_result);
+            ?>
+            <h2><?= $post['title'] ?></h2>
             <div class="post__author">
                 <div class="post__author-avatar">
-                    <img src="./images/blog2.jpg" alt="">
+                     <img src="./images/<?= $user['avatar'] ?>" alt="">
                 </div>
                 <div class="post__author-info">
-                    <h5>By: TrungGD1</h5>
-                    <small>July 16, 2025 - 11:17</small>
+                    <h5>By: <?= $user['first_name'] .' '. $user['last_name']?></h5>
+                    <small>
+                        <?= date("M d, Y - H:i ", strtotime($post['date_time'])) ?>
+                    </small>
                 </div>
             </div>
             <div class="singlepost__thumbnail">
-                <img src="./images/blog6.jpg" >
+                <img src="./images/<?= $post['thumbnail'] ?>" >
             </div>
-            <p> là dòng sản phẩm truyền thông khoa học viễn tưởng được sản xuất bởi Sunrise, 
-                dòng sản phẩm này xoay quanh những người máy khổng lồ (mecha) với tên gọi "Gundam"
-            </p>
-            <p>
-                Mobile Suit Gundam được phát triển bởi Yoshiyuki Tomino và một nhóm các nhà sáng tạo của Sunrise với tên gọi Hajime Yatate.
-                Bộ phim ban đầu được đặt tên là Freedom Fighter Gunboy (hay Gunboy), hướng chủ yếu vào đối tượng là các bé trai. 
-                Giai đoạn phát triển ban đầu có nhiều chi tiết liên quan tới cụm từ Tự Do: The White Base - Căn Cứ Trắng ban đầu được đặt tên là 
-                Freedom's Fortress - Pháo Đài Tự Do, chiến đấu cơ Core Fighter thì được gọi là Freedom Wing - Đôi Cánh Tự Do và vận chuyển 
-                cơ Gunperry được gọi là Freedom Cruiser - Tuần Dương Tự Do
-            </p>
-            <p>
-                Mobile Suit Gundam được phát triển bởi Yoshiyuki Tomino và một nhóm các nhà sáng tạo của Sunrise với tên gọi Hajime Yatate.
-                Bộ phim ban đầu được đặt tên là Freedom Fighter Gunboy (hay Gunboy), hướng chủ yếu vào đối tượng là các bé trai. 
-                Giai đoạn phát triển ban đầu có nhiều chi tiết liên quan tới cụm từ Tự Do: The White Base - Căn Cứ Trắng ban đầu được đặt tên là 
-                Freedom's Fortress - Pháo Đài Tự Do, chiến đấu cơ Core Fighter thì được gọi là Freedom Wing - Đôi Cánh Tự Do và vận chuyển 
-                cơ Gunperry được gọi là Freedom Cruiser - Tuần Dương Tự Do
+            <p> 
+                <?= substr($post['body'],0, 300)?>
             </p>
         </div>
     </section>

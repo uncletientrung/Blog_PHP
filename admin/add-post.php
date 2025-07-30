@@ -1,32 +1,54 @@
 <?php
     include 'partials/header.php';
+    // Truy vấn select ra các category
+    $query="SELECT * FROM categories";
+    $categories = mysqli_query($conn, $query);
+    //
+    $title=$_SESSION['add-post-data']['title'] ?? null;
+    $body=$_SESSION['add-post-data']['body'] ?? null;
+    unset($_SESSION['add-post-data']);
 ?>
-        <section class="form__section">
+<section class="form__section">
         <div class="container form__section-container">
             <h2>Add Post</h2>
-            <div class="alert__message error">
-                <p>This is an error message</p>
-            </div>
-            <form action="" enctype="multipart/form-data">
-                <input type="text" placeholder="Title">
-                <select >
-                    <option value="1">Red</option>
-                    <option value="2">Blue</option>
-                    <option value="3">Yellow</option>
-                    <option value="4">Green</option>
-                    <option value="5">Purple</option>
-                    <option value="6">Orange</option>
-                </select>
-                <textarea rows="10" placeholder="Body"></textarea>
-                <div class="form__control inline">
-                    <input type="checkbox" id="is_featured" checked>
-                    <label for="is_featured" >Featured</label> 
+            <?php if(isset($_SESSION['add-post-success'])) :?>
+                <div class="alert__message success">
+                    <p>
+                        <?= $_SESSION['add-post-success'];
+                            unset($_SESSION['add-post-succes']);
+                        ?>
+                    </p>
+                </div> 
+            <?php elseif(isset($_SESSION['add-post'])) :?>
+                <div class="alert__message error">
+                    <p>
+                        <?= $_SESSION['add-post'];
+                            unset($_SESSION['add-post']);
+                        ?>
+                    </p>
                 </div>
+            <?php endif ?>
+            <form action="<?= ROOT_URL?>admin/add-post-logic.php" enctype="multipart/form-data" method="POST">
+                <input type="text" placeholder="Title" name="title" value="<?= $title ?>">
+                <select name="category">
+                    <?php while($category_row=mysqli_fetch_assoc($categories)) : ?>
+                        <option value="<?= $category_row['id']?>"><?= $category_row['title'] ?></option>  
+                    <?php endwhile ?>
+                </select>
+
+                <textarea rows="10" placeholder="Body" name="body" ><?= $body ?></textarea>
+
+                <?php if(isset($_SESSION['user_is_admin'])) : ?>
+                    <div class="form__control inline">
+                        <input type="checkbox" id="is_featured" value="1" name="is_featured">
+                        <label for="is_featured" >Featured</label> 
+                    </div>
+                <?php endif ?>
                 <div class="form__control">
                     <label for="thumbnail">Add Thumbnaii</label>
-                    <input type="file" id="thumbnaii">
+                    <input type="file" id="thumbnaii" name="thumbnail">
                 </div>
-                <button type="submit" class="btn">Add Post</button>
+                <button type="submit" class="btn" name="submit">Add Post</button>
             </form>
         </div>
     </section>
