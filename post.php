@@ -36,7 +36,7 @@
                 <img src="./images/<?= $post['thumbnail'] ?>" >
             </div>
             <p> 
-                <?= substr($post['body'],0, 300)?>
+                <?= $post['body']?>
             </p>
         </div>
     </section>
