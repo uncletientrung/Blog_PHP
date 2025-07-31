@@ -1,6 +1,6 @@
 <!-- author: uncletientrung -->
 # Ứng dụng blog PHP & MySQL với bảng điều khiển quản trị  
-    ![](./images/thumbnail.jpg)
+    ![](thumbnail.jpg)
 ## Getting Started
 1. Tải source code vào trong xampp -> htdocs:
 
