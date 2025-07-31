@@ -1,5 +1,5 @@
 <!-- author: uncletientrung -->
-# Ứng dụng blog PHP & MySQL với bảng điều khiển quản trị   <br> <img src="./img/fish.gif">
+# Ứng dụng blog PHP & MySQL với bảng điều khiển quản trị   <br> <img src="thumbnail.jpg">
     
 ## Getting Started
 1. Tải source code vào trong xampp -> htdocs:
